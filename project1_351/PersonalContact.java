@@ -25,7 +25,7 @@ public class PersonalContact extends Contact implements Cloneable {
         PersonalContact theCopy = null;
         try {
             theCopy = (Contact)super.clone(); // clone Contact's fields
-            theCopy.label = (Lable) label.clone;
+		theCopy.label = (Lable) label.clone;
         }
         catch(CloneNotSupportedException cnse) {
             System.out.println(cnse.getMessage());

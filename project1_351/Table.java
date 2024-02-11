@@ -1,3 +1,5 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 public class Table<T extends Contact> implements Iterable<T> {
 
 	
@@ -24,7 +26,7 @@ public class Table<T extends Contact> implements Iterable<T> {
         }
 
         public T getData(){
-            return (this.data);
+            return (this.getData());
         }
 
         public Node<T> getPrevious(){
@@ -37,37 +39,38 @@ public class Table<T extends Contact> implements Iterable<T> {
 
     }
 
-    public doClear(){
-       this.head = new Node(null, null, null);
-       this.tail = new Node(null, head, null);
+    @SuppressWarnings("unchecked")
+	private void doClear(){
+       this.head = new Node<T>(null, null, null);
+       this.tail = new Node<T>(null, head, null);
        this.head.next = tail;
 
        this.size = 0;
        this.modCount++;
    }
-    public void clear
+    public void clear()
     {doClear();}
     public int size(){
         return this.size();
     }
 	public boolean isEmpty(){
-        return (this size() == 0);
+        return (this.size() == 0);
     }
     
     public void insert(T nodeData){
-        add(this.size(), node); return true;
+        add(this.size(), nodeData); 
     }
 	
     public void add(int idx, T nodeData){
-        addBefore(getNode(idx,0,size(), nodeObject));}
+        addBefore(getNode(idx,0,size(), nodeData));}
 
     public boolean contains(T nodeObject){
-        boolean contains = false
-        Node current = this.head;
+        boolean contains = false;
+        Node<T> current = this.head;
         while(current.next != null){
 
             current = current.next;
-            if(current.getData().equals(nodeObject){
+            if(current.getData().equals(nodeObject)){
 
                 contains = true;
                 break;
@@ -82,14 +85,19 @@ public class Table<T extends Contact> implements Iterable<T> {
     public Table<T> difference(Table<T> table){
 
         Table<T> newTable = new Table<>();
-        Node<T> current = myTable.head;
+        Node<T> current = newTable.head;
+        T object = null;
+        
+		
+		//Iterate though each item of the FruitBasket and print them
 
-        while(current.hasNext()){
+        while(current.next != null){
             
-            current = current.next;      
-            if(!this.contains(current).getData()){
+            current = current.next;
+            object = current.getData();
+            if(!this.contains(object)){
 
-                newTable.add(current.getData());
+                newTable.add(current);
             }
 
         }
@@ -165,7 +173,7 @@ public class Table<T extends Contact> implements Iterable<T> {
         Node<T> current = selectedTable.head;
         T data = null;
 
-        while(curent.hasNext()){
+        while(curentt.hasNext()){
 
             current = current.next;
             current.data.setValue(attribute, value);
@@ -176,7 +184,7 @@ public class Table<T extends Contact> implements Iterable<T> {
    }
             
     public T get(int idx){
-        return (getNode(idx).data;}
+        return (getNode(idx).getData());}
     public T set(int idx, T newValue){
         Node<T> p = getNode(idx);
         T oldValue = p.data;
@@ -191,7 +199,7 @@ public class Table<T extends Contact> implements Iterable<T> {
     private void addBefore(Node<T> node, T nodeData){
         Node<T> newNode = new Node<>(nodeData, node.getPrevious, node);
         newNode.previous.next = newNode;
-        p.previous = newNode;
+        newNode.previous = newNode;
         this.size()++;
         this.modCount++;
    }
@@ -211,7 +219,8 @@ public class Table<T extends Contact> implements Iterable<T> {
         return getNode(idx, 0, this.size() - 1);
 
     }
-    private Node<T> getNode{int idx, int lower, int upper){
+    private Node<T> getNode(int idx, int lower, int upper){
+        	
         Node<T> node;
 
         if(idx < lower || idx > upper){
@@ -221,19 +230,19 @@ public class Table<T extends Contact> implements Iterable<T> {
         if(idx < size() / 2){
             node = head;
             for(int i = 0; i < idx; i++){
-                node = node.nex;
+                node = node.next;
             }
 
         }
             
        else{
            node = tail;
-           for(i = this.size; i > idx; i++){
+           for(int j = this.size(); j > idx; j++){
                node = node.previous;
             }
        }
 
-       return (this.node);
+       return (node);
 
     }
 
@@ -244,10 +253,10 @@ public class Table<T extends Contact> implements Iterable<T> {
         return new TableIterator();
     }
 
-    public class TableIterator  implements java.util.Iterator<T>{
+    public class TableIterator implements java.util.Iterator<T>{
         
-        private Node<AnyType> current = head.next;
-        private int expectedModCount = this.modCount;
+        private Node<T> current = head.next;
+        private int expectedModCount = Table.this.modCount;
         private boolean okToRemove = false;
 
         public boolean hasNext(){
@@ -258,16 +267,16 @@ public class Table<T extends Contact> implements Iterable<T> {
 
        public T next(){
 
-           if(modCount != excpectedModCount){
+           if(modCount != expectedModCount){
                throw new java.util.ConcurrentModificationException();
            }
 
            if(!hasNext()){
             
-              throw new noSuchElementException();
+              throw new NoSuchElementException();
            }
 
-          T nodeObject = current.data;
+          T nodeObject = current.getData();
           current = current.next;
           okToRemove = true;
           return (nodeObject);
@@ -276,7 +285,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         public void remove(){
 
-            if(modCount != excpectedModCount){                                   
+            if(modCount != expectedModCount){                                   
                 throw new java.util.ConcurrentModificationException();           
             }
 
@@ -285,13 +294,13 @@ public class Table<T extends Contact> implements Iterable<T> {
             }
 
             Table.this.remove(current.previous);
-            excpectedModCount ++;
+            expectedModCount ++;
             okToRemove = false;
 
         }
-
-   }
-
-
+  }
 
 }
+
+
+
