@@ -139,11 +139,35 @@ public class Table<T extends Contact> implements Iterable<T> {
         return (intersectTable);
 
     }
-    public void remove(String attribute, String value){}
+    public void remove(String attribute, String value){
+
+
+        Node<T> current = this.head;
+        T data = null;
+
+        while(current.hasNext()){
+
+            
+
+        }
+
+
 
     public Table<T> select(String attribute, String value){}
-
         
+        Table<T> selectedTable = this;
+        Node<T> current = selectedTable.head;
+        T data = null;
+
+        while(curent.hasNext()){
+
+            current = current.next;
+            current.data.setValue(attribute, value);
+        }
+
+        return (selectedTable);
+
+   }
             
     public T get(int idx){
         return (getNode(idx).data;}
