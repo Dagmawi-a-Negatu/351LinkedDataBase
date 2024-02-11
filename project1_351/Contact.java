@@ -65,7 +65,7 @@ public class Contact implements ContactInterface{
 	public boolean exists(String attriubte) {
 		List<Field> attributes = getAllFields(this);
 		for (Field field : attributes) {
-			if (attriubte.equalsIgnoreCase(field)) {
+			if (attriubte.equalsIgnoreCase(field.getName()) {
 				return true;
 			}
 		try {
@@ -91,7 +91,7 @@ public class Contact implements ContactInterface{
 	public boolean hasValue(String attribute, String value) throws IllegalArgumentException {
 		List<Field> attributes = getAllFields(this);
 		for (Field field : attributes) {
-			if (attriubte.equalsIgnoreCase(field) && field.get(this).equalsIgnoreCase(value)) {
+			if (attriubte.equalsIgnoreCase(field.getName()) && field.get(this).equalsIgnoreCase(value)) {
 		  		return true;
             }
 		if (!exists(attribute)) {
@@ -113,7 +113,7 @@ public class Contact implements ContactInterface{
 			}
 		}
 		return false;
-	  }
+    }
 
    }
 	@Override
@@ -125,13 +125,15 @@ public class Contact implements ContactInterface{
         }
 	    else {
 			try {
-				this.getClass().getDeclaredField(attribute).set(this, value);
+				this.getClass().getDeclaredField(attribute)
+                field.setAccessible(true);
+                field.set(this, value);
 			} catch (NoSuchFieldException nsfe) {
 				System.out.println(nsfe.getMessage());
 			} catch (IllegalAccessException iae) {
 				System.out.println(iae.getMessage());
 			}
 		}
-	}
+    }
 
 }
