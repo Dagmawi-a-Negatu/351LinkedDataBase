@@ -142,8 +142,20 @@ public class Table<T extends Contact> implements Iterable<T> {
     public void remove(String attribute, String value){}
 
     public Table<T> select(String attribute, String value){}
-
         
+        Table<T> selectedTable = this;
+        Node<T> current = selectedTable.head;
+        T data = null;
+
+        while(curent.hasNext()){
+
+            current = current.next;
+            current.data.setValue(attribute, value);
+        }
+
+        return (selectedTable);
+
+   }
             
     public T get(int idx){
         return (getNode(idx).data;}
