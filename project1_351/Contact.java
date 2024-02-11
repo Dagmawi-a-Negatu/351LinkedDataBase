@@ -1,4 +1,4 @@
-public class Contact implements ContactInterface{
+public class Contact implements ContactInterface, Clonable{
 	
 	private PersonalInfo personalInfo;
 	private Address address;
@@ -61,6 +61,19 @@ public class Contact implements ContactInterface{
 	}
 
 	
+    @Override
+    public Contact clone() {
+        Contact theCopy = null;
+        try {
+            theCopy = (Contact)super.clone(); // clone Contact's fields
+            theCopy.address = (Address) address.clone;
+        }
+        catch(CloneNotSupportedException cnse) {
+            System.out.println(cnse.getMessage());
+        }
+        return theCopy;
+    }
+
     @Override
 	public boolean exists(String attriubte) {
 		List<Field> attributes = getAllFields(this);
