@@ -1,13 +1,35 @@
-public class WorkContact extends Contact {
+public class WorkContact extends Contact, Clonable {
 	
-   public workContact(int phoneNumber, String emailAdress){
-       super(phoneNumber, emailAddress);
+   private String title;
+   private String company;
+   private String department;
+
+   public workContact(int phoneNumber, String emailAdress,
+   Address address, PersonalInfo personalInfo, String title,
+   String company, String department){
+       super(phoneNumber, emailAddress, address, personalInfo);
+       this.title = title;
+       this.company = company;
+       this.department = department;
    }
-    private String title; //Job title
-	private String company; //Company contact works for
-	private String deparmtnet; // Contact's department
-	//... 
-	
-	
+
+
+   
+  @Overide
+  public WorkContact clone() {
+        WorkContact theCopy = null;
+        try {
+            theCopy = (Contact)super.clone(); // clone Contact's fields
+            theCopy.company = this.company;
+            theCopy.department = this.department;
+            theCopy.title = this.title;
+        }
+        catch(CloneNotSupportedException cnse) {
+            System.out.println(cnse.getMessage());
+        }
+
+        return theCopy;
+  }
+  	
 
 }
