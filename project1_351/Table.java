@@ -102,15 +102,15 @@ public class Table<T extends Contact> implements Iterable<T> {
 
     public Table<T> union(Table<T> table){
 
-        Table<T> newTable = new Table<>();
-        Node<T> current = myTable.head;
+        Table<T> unionTable = table;
+        Node<T> current = this.head;
         T data = null;
 
         while(current.hasNext()){
 
             current = current.next;
             data = current.data;
-            if(this.contains(data) && !(newTable.contains(data))){
+            if(!(newTable.contains(data))){
 
                 newTable.add(current.getData());
             }
@@ -123,11 +123,22 @@ public class Table<T extends Contact> implements Iterable<T> {
 
 
     public Table<T> intersect(String attribute, String value,
-    Table<T>){
+    Table<T> table){
+        
+        Table<T> intersectTable = this.union(table);
+        Node<T> current = intersectTable.head;
+        T data = null;
 
+        while(current.hasNext()){
+
+            current = current.next;
+            current.data.setValue(attribute, value);
+
+        }
+
+        return (intersectTable);
 
     }
-
     public void remove(String attribute, String value){}
 
     public Table<T> select(String attribute, String value){}
