@@ -104,11 +104,13 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         Table<T> newTable = new Table<>();
         Node<T> current = myTable.head;
+        T data = null;
 
         while(current.hasNext()){
 
             current = current.next;
-            if(this.contains(current.getData()){
+            data = current.data;
+            if(this.contains(data) && !(newTable.contains(data))){
 
                 newTable.add(current.getData());
             }
@@ -119,6 +121,18 @@ public class Table<T extends Contact> implements Iterable<T> {
 
     }
 
+
+    public Table<T> intersect(String attribute, String value,
+    Table<T>){
+
+
+    }
+
+    public void remove(String attribute, String value){}
+
+    public Table<T> select(String attribute, String value){}
+
+        
             
     public T get(int idx){
         return (getNode(idx).data;}
@@ -168,6 +182,8 @@ public class Table<T extends Contact> implements Iterable<T> {
             for(int i = 0; i < idx; i++){
                 node = node.nex;
             }
+
+        }
             
        else{
            node = tail;
@@ -197,7 +213,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
             return (current != tail && current!= null);
 
-       }
+        }
 
        public T next(){
 

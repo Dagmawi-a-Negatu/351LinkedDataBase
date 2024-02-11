@@ -76,20 +76,21 @@ public class Contact implements ContactInterface, Clonable{
 
     @Override
 	public boolean exists(String attriubte) {
+
 		List<Field> attributes = getAllFields(this);
 		for (Field field : attributes) {
-			if (attriubte.equalsIgnoreCase(field.getName()) {
+			if (attriubte.equalsIgnoreCase(field)) {
 				return true;
 			}
+        }
 		try {
 			this.getClass().getDeclaredField(attriubte);
 			return true;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
-		return false;
-	}
+		
+    }
 
 	/**
 	 * Check to see if a record has an attribute containing a specific value.
@@ -101,36 +102,41 @@ public class Contact implements ContactInterface, Clonable{
 	 * @throws IllegalArgumentExcpetion if the attirubte is invalid.
 	 */
 	@Override
-	public boolean hasValue(String attribute, String value) throws IllegalArgumentException {
+	public boolean hasValue(String attribute, String value)
+    throws IllegalArgumentException {
 		List<Field> attributes = getAllFields(this);
 		for (Field field : attributes) {
-			if (attriubte.equalsIgnoreCase(field.getName()) && field.get(this).equalsIgnoreCase(value)) {
+			if (attriubte.equalsIgnoreCase(field)
+                && field.get(this).equalsIgnoreCase(value)) {
 		  		return true;
             }
+        }
 		if (!exists(attribute)) {
 			throw new IllegalArgumentException();
 		} else {
 			try {
-				String val = (String)this.getClass().getDeclaredField(attribute).get(this);
-				if (val.equalsIgnoreCase(value)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (NoSuchFieldException nsfe) {
-				System.out.println(nsfe.getMessage());
-				return false;
-			} catch (IllegalAccessException iae) {
-				System.out.println(iae.getMessage());
-				return false;
-			}
-		}
+				    String val = (String)this.getClass().getDeclaredField
+                    (attribute).get(this);
+				    if (val.equalsIgnoreCase(value)) {
+					    return true;
+				    } else {
+					    return false;
+				    }
+			    } catch (NoSuchFieldException nsfe) {
+				    System.out.println(nsfe.getMessage());
+				    return false;
+			    } catch (IllegalAccessException iae) {
+				    System.out.println(iae.getMessage());
+				    return false;
+			    }
+		  }
 		return false;
     }
 
    }
 	@Override
-	public void setValue(String attribute, String value) throws IllegalArgumentException {
+	public void setValue(String attribute, String value) 
+    throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 		if(!exists(attribute)) {
