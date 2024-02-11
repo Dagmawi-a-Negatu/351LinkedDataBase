@@ -1,10 +1,9 @@
-public class PersonalContact extends Contact implements Clonable {
+public class PersonalContact extends Contact implements Cloneable {
 	
 	
-    private Lable lable;
+    private Label label;
 	
-	enum Label{
-		
+	enum Label {
         MOM,
 		DAD,
 		BROTHER,
@@ -16,8 +15,8 @@ public class PersonalContact extends Contact implements Clonable {
 	
 	public PersonalContact(int phoneNumber, String emailAddress,
     Address address, PersonalInfo personalInfo, Label label) {
-	    super(phoneNumber, emailAdress, address, personalInfo);
-        this.lable = label;
+	    super(phoneNumber, emailAddress, address, personalInfo);
+        this.label = label;
 		// TODO Auto-generated constructor stub
 	}
 

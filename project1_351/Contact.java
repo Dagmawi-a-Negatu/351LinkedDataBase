@@ -82,6 +82,11 @@ public class Contact implements ContactInterface, Cloneable {
         return theCopy;
     }
 
+	/**
+    * Check to see if a record has an attribute. Should not be case sensitive.
+    * @param attribute possible attribute within a record.
+    * @return true if the value is contained in the object, false otherwise.
+    */
     @Override
 	public boolean exists(String attriubte) {
 		try {
