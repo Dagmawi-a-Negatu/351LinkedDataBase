@@ -8,7 +8,8 @@ public class WorkContact extends Contact {
         super(phoneNumber, emailAddress, address, personalInfo);
     }
 
-    public WorkContact(int phoneNumber, String emailAddress, Contact.Address address, PersonalInfo personalInfo, String title, String company, String department) {
+    public WorkContact(int phoneNumber, String emailAddress, Contact.Address address,
+		       PersonalInfo personalInfo, String title, String company, String department) {
         super(phoneNumber, emailAddress, address, personalInfo);
         this.title = title;
         this.company = company;
