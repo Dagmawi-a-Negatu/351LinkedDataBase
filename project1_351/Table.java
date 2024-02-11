@@ -54,7 +54,7 @@ public class Table<T extends Contact> implements Iterable<T> {
         return (this size() == 0);
     }
     
-    public boolean insert(T nodeData){
+    public void insert(T nodeData){
         add(this.size(), node); return true;
     }
 	
@@ -87,9 +87,37 @@ public class Table<T extends Contact> implements Iterable<T> {
         while(current.hasNext()){
             
             current = current.next;      
-            if(!this.contains(current)){
+            if(!this.contains(current).getData()){
 
-                newTable.add(
+                newTable.add(current.getData());
+            }
+
+        }
+
+        return (newTable);
+
+    }
+
+
+
+    public Table<T> union(Table<T> table){
+
+        Table<T> newTable = new Table<>();
+        Node<T> current = myTable.head;
+
+        while(current.hasNext()){
+
+            current = current.next;
+            if(this.contains(current.getData()){
+
+                newTable.add(current.getData());
+            }
+
+        }
+
+        return (newTable);
+
+    }
 
             
     public T get(int idx){
@@ -112,11 +140,6 @@ public class Table<T extends Contact> implements Iterable<T> {
         this.size()++;
         this.modCount++;
    }
-
-
-   public Table<T> difference(Table<T> table){
-       Table<T> givenTable = table;
-
 
 
 
@@ -172,7 +195,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         public boolean hasNext(){
 
-            return (current != tail);
+            return (current != tail && current!= null);
 
        }
 
