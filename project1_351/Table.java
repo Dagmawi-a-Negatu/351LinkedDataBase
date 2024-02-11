@@ -147,7 +147,13 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         while(current.hasNext()){
 
-            
+		current = current.next;
+		if(current.data.hasValue(attribute, value){
+
+			this.remove(current);
+			break;
+
+		}
 
         }
 
