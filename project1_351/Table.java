@@ -7,6 +7,11 @@ public class Table<T extends Contact> implements Iterable<T> {
     private Node<T> tail;
     private String title;
 
+    
+    public Table(){
+        doClear();
+    }
+
     private static class Node<T>{
         public T nodeData;
         public Node<T> previous;
@@ -49,13 +54,44 @@ public class Table<T extends Contact> implements Iterable<T> {
         return (this size() == 0);
     }
     
-    public boolean add(T nodeData){
+    public boolean insert(T nodeData){
         add(this.size(), node); return true;
     }
 	
     public void add(int idx, T nodeData){
         addBefore(getNode(idx,0,size(), nodeObject));}
 
+    public boolean contains(T nodeObject){
+        boolean contains = false
+        Node current = this.head;
+        while(current.next != null){
+
+            current = current.next;
+            if(current.getData().equals(nodeObject){
+
+                contains = true;
+                break;
+            }
+
+        }
+            
+        return (contains);
+
+    }
+
+    public Table<T> difference(Table<T> table){
+
+        Table<T> newTable = new Table<>();
+        Node<T> current = myTable.head;
+
+        while(current.hasNext()){
+            
+            current = current.next;      
+            if(!this.contains(current)){
+
+                newTable.add(
+
+            
     public T get(int idx){
         return (getNode(idx).data;}
     public T set(int idx, T newValue){
@@ -76,6 +112,12 @@ public class Table<T extends Contact> implements Iterable<T> {
         this.size()++;
         this.modCount++;
    }
+
+
+   public Table<T> difference(Table<T> table){
+       Table<T> givenTable = table;
+
+
 
 
     private T remove(Node<T> node){
@@ -112,6 +154,11 @@ public class Table<T extends Contact> implements Iterable<T> {
        }
 
        return (this.node);
+
+    }
+
+
+
 
     public java.util.Iterator<T> iterator(){
         return new TableIterator();
