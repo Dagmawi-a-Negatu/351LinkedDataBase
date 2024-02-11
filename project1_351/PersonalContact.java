@@ -1,11 +1,11 @@
 public class PersonalContact extends Contact implements Clonable {
 	
 	
-    private Lable lable;
+    private Label label;
 	
 	enum Label{
 		
-        MOM,
+                MOM,
 		DAD,
 		BROTHER,
 		SISTER,
@@ -16,23 +16,16 @@ public class PersonalContact extends Contact implements Clonable {
 	
 	public PersonalContact(int phoneNumber, String emailAddress,
     Address address, PersonalInfo personalInfo, Label label) {
-	    super(phoneNumber, emailAdress, address, personalInfo);
-        this.lable = label;
+	    super(phoneNumber, emailAddress, address, personalInfo);
+        this.label = label;
 		// TODO Auto-generated constructor stub
 	}
 
     @Override
     public PersonalContact clone() {
         PersonalContact theCopy = null;
-        try {
-            theCopy = (Contact)super.clone(); // clone Contact's fields
-            theCopy.label = (Lable) label.clone;
-        }
-        catch(CloneNotSupportedException cnse) {
-            System.out.println(cnse.getMessage());
-        }
+        theCopy = (PersonalContact)super.clone(); // clone Contact's fields
+		theCopy.label = (Label) this.label;
         return theCopy;
     }
-
 }
-
