@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 public class Table<T extends Contact> implements Iterable<T> {
 
@@ -26,7 +25,7 @@ public class Table<T extends Contact> implements Iterable<T> {
         }
 
         public T getData(){
-            return (this.getData());
+            return (this.nodeData);
         }
 
         public Node<T> getPrevious(){
@@ -62,7 +61,10 @@ public class Table<T extends Contact> implements Iterable<T> {
     }
 	
     public void add(int idx, T nodeData){
-        addBefore(getNode(idx,0,size(), nodeData));}
+    	
+        addBefore(getNode(idx, 0, size()), nodeData);
+        
+    }
 
     public boolean contains(T nodeObject){
         boolean contains = false;
@@ -97,7 +99,8 @@ public class Table<T extends Contact> implements Iterable<T> {
             object = current.getData();
             if(!this.contains(object)){
 
-                newTable.add(current);
+                object = current.getData();
+            	newTable.insert(object);
             }
 
         }
@@ -114,18 +117,18 @@ public class Table<T extends Contact> implements Iterable<T> {
         Node<T> current = this.head;
         T data = null;
 
-        while(current.hasNext()){
+        while(current.next != null){
 
             current = current.next;
-            data = current.data;
-            if(!(newTable.contains(data))){
+            data = current.getData();
+            if(!(unionTable.contains(data))){
 
-                newTable.add(current.getData());
+                unionTable.insert(current.getData());
             }
 
         }
 
-        return (newTable);
+        return (unionTable);
 
     }
 
@@ -135,12 +138,12 @@ public class Table<T extends Contact> implements Iterable<T> {
         
         Table<T> intersectTable = this.union(table);
         Node<T> current = intersectTable.head;
-        T data = null;
+        
 
-        while(current.hasNext()){
+        while(current.next != null){
 
             current = current.next;
-            current.data.setValue(attribute, value);
+            current.nodeData.setValue(attribute, value);
 
         }
 
@@ -151,32 +154,34 @@ public class Table<T extends Contact> implements Iterable<T> {
 
 
         Node<T> current = this.head;
-        T data = null;
 
-        while(current.hasNext()){
+        while(current.next !=null){
 
-		current = current.next;
-		if(current.data.hasValue(attribute, value){
+			current = current.next;
+			if(current.nodeData.hasValue(attribute, value)){
+	
+				this.remove(current);
+				break;
 
-			this.remove(current);
-			break;
-
-		}
+			}
 
         }
+        
+        
+    }
 
 
 
-    public Table<T> select(String attribute, String value){}
+    public Table<T> select(String attribute, String value){
         
         Table<T> selectedTable = this;
         Node<T> current = selectedTable.head;
         T data = null;
 
-        while(curentt.hasNext()){
+        while(current.next != null){
 
             current = current.next;
-            current.data.setValue(attribute, value);
+            current.nodeData.setValue(attribute, value);
         }
 
         return (selectedTable);
@@ -185,11 +190,14 @@ public class Table<T extends Contact> implements Iterable<T> {
             
     public T get(int idx){
         return (getNode(idx).getData());}
+    
+    
     public T set(int idx, T newValue){
+    	
         Node<T> p = getNode(idx);
-        T oldValue = p.data;
-        p.data = newValue;
-        return (oldVal);
+        T oldValue = p.nodeData;
+        p.nodeData = newValue;
+        return (oldValue);
     }
 
     public T remove(int idx){
@@ -197,10 +205,10 @@ public class Table<T extends Contact> implements Iterable<T> {
     }
 
     private void addBefore(Node<T> node, T nodeData){
-        Node<T> newNode = new Node<>(nodeData, node.getPrevious, node);
+        Node<T> newNode = new Node<>(nodeData, node.getPrevious(), node);
         newNode.previous.next = newNode;
         newNode.previous = newNode;
-        this.size()++;
+        this.size++;
         this.modCount++;
    }
 
@@ -212,7 +220,7 @@ public class Table<T extends Contact> implements Iterable<T> {
         this.size--;
         this.modCount ++;
 
-        return (node.getData);
+        return (node.getData());
     }
     private Node<T> getNode(int idx){
         
@@ -298,9 +306,8 @@ public class Table<T extends Contact> implements Iterable<T> {
             okToRemove = false;
 
         }
-  }
 
-}
+   }
 
 
 
