@@ -20,11 +20,11 @@ class Address {
 		return (this.streetAddress);
 	}
 	
-	public String city() {
+	public String getCity() {
 		return (this.city);
 	}
 	
-	public String state() {
+	public String getState() {
 		return (this.state);
 	}
 	
