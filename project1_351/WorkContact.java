@@ -1,15 +1,17 @@
+package project1CS351;
+
 public class WorkContact extends Contact {
 	
     private String title;
     private String company;
     private String department;
 
-    public WorkContact(int phoneNumber, String emailAddress, Contact.Address address, PersonalInfo personalInfo) {
+    public WorkContact(Long phoneNumber, String emailAddress, Address address, PersonalInfo personalInfo) {
         super(phoneNumber, emailAddress, address, personalInfo);
     }
 
-    public WorkContact(int phoneNumber, String emailAddress, Contact.Address address,
-		       PersonalInfo personalInfo, String title, String company, String department) {
+    public WorkContact(Long phoneNumber, String emailAddress,
+    		Address address, PersonalInfo personalInfo, String title, String company, String department) {
         super(phoneNumber, emailAddress, address, personalInfo);
         this.title = title;
         this.company = company;
@@ -31,4 +33,8 @@ public class WorkContact extends Contact {
 
         return theCopy;
   }
+  
 }
+
+
+
