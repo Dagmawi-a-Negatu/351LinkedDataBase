@@ -10,12 +10,16 @@ import java.util.Scanner;
 
 public class ContactList {
     Scanner scan = new Scanner(System.in);
+    
     public static void main(String[] args) {
-    	String personalContactFile ="personalContacts1.txt";
-        String personalContactfile = "personalContacts";
-       
+    	
+    	String contactFile1 ="personalContacts1.txt";
+        String contactFile2 = "workContacts2.txt";
+        Table<WorkContact> workContactTable = new Table();
+        Table<PersonalContact> personalContactTable = new Table();
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(personalContactFile))) {
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(contactFile2))) {
             String line;
             PersonalInfo thisInfo = null;
             Address thisAddress;
@@ -24,30 +28,37 @@ public class ContactList {
          // Read and discard the first line
             String identifier = reader.readLine();
             while ((line = reader.readLine()) != null) {
-                // Split the line by comma and trim whitespace from each field
-            	
-            	
+                
+            		
+            	    // Split the line by comma and trim whitespace from each field
 	                String[] fields = line.split(",");
 	                for (int i = 0; i < fields.length; i++) {
 	                    fields[i] = fields[i].trim(); // Trim the field to remove leading/trailing whitespace
 	                }
 	                
-	      
-	                thisAddress = new Address(fields[4], fields[5], fields[6], Long.parseLong(fields[7]));
 	                
 	                
 	                if(identifier.equals("P")){
+	                	thisAddress = new Address(fields[4], fields[5], fields[6], Long.parseLong(fields[7]));
 	                	thisInfo = new PersonalInfo(fields[0], fields[1]);
 	                	thisLabel = Label.fromString(fields[8]);
 	                	PersonalContact personalContact = new PersonalContact(Long.parseLong(fields[3]),
 	                			fields[2], thisAddress, thisInfo, thisLabel);
+	                	personalContactTable.insert(personalContact);
 	                	
 	                }else if(identifier.equals("W")){
-	                	thisInfo = new PersonalInfo(fields[0], fields[1], status);
+	                	thisAddress = new Address(fields[5], fields[6], fields[7], Long.parseLong(fields[8]));
+	                	Status thisStatus = Status.fromString(fields[2]);
+	                	thisInfo = new PersonalInfo(fields[0], fields[1], thisStatus);
+	                	WorkContact workContact = new WorkContact(Long.parseLong(fields[4]), fields[3], thisAddress,
+	                			thisInfo, fields[9], fields[10], fields[10]);
+	                	
+	                	workContactTable.insert(workContact);
+						
+	                	
 	                }
 	                
-	        
-	               
+	                
 	                System.out.println("---------------"); // Separator for visual distinction between records
             }
             
