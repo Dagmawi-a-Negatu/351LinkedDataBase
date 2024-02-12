@@ -19,13 +19,21 @@ public class Contact implements ContactInterface, Cloneable {
 	}
 		
 	
-	public Long getPhoneNumber() {
-		return (this.phoneNumber);
-	}
-	
-	public String getEmailAddress() {
-		return (this.emailAddress);
-	}
+	 public Long phoneNumber() {
+	    	return (this.phoneNumber);
+	 }
+	    
+	 public String getEmailAddress() {
+	    	return (this.emailAddress);
+	 }
+	    
+	 public Address getAdress() {
+	    	return (this.address);
+	 }
+	    
+	 public PersonalInfo getPersonalInfo() {
+	    	return (this.personalInfo);
+	 }
 
 	
     @Override
