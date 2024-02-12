@@ -32,7 +32,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         public Node<T> getPrevious(){
             return (this.previous);
-
+        
         }public Node<T> getNext(){
             return (this.next);
         
@@ -51,9 +51,11 @@ public class Table<T extends Contact> implements Iterable<T> {
    }
     public void clear()
     {doClear();}
+    
     public int size(){
-        return this.size();
+        return this.size;
     }
+    
 	public boolean isEmpty(){
         return (this.size() == 0);
     }
