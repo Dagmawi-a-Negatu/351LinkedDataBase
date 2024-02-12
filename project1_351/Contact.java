@@ -1,56 +1,15 @@
+package project1CS351;
+
 public class Contact implements ContactInterface, Cloneable {
 	
 	private PersonalInfo personalInfo;
 	private Address address;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private String emailAddress;
 	
 	
-	class Address {
-		
-	    private String streetAddress;
-		private String city;
-		private String state;
-		private int zipCode;
-		
-		public Address(String streetAddress, String city, String state,
-				int zipCode) {
-			this.streetAddress = streetAddress;
-			this.city = city;
-			this.state = state;
-			this.zipCode = zipCode;
-		}
-
-		public String getstreetAddress(){
-			return (this.streetAddress);
-		}
-		
-		public String city() {
-			return (this.city);
-		}
-		
-		public String state() {
-			return (this.state);
-		}
-		
-		public int getZipCode() {
-			return (this.zipCode);
-		}
-
-		@Override
-		public Address clone() {
-			Address copy = null;
-			try {
-				copy = (Address)super.clone();
-			} catch (CloneNotSupportedException cnse){
-				System.out.println(cnse.getMessage());
-			}
-			return copy;
-		}
-	}
 	
-	
-	public Contact(int phoneNumber, String emailAddress, Address address,
+	public Contact(Long phoneNumber, String emailAddress, Address address,
     PersonalInfo personalInfo) {
 		
 		this.phoneNumber = phoneNumber;
@@ -60,7 +19,7 @@ public class Contact implements ContactInterface, Cloneable {
 	}
 		
 	
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return (this.phoneNumber);
 	}
 	
@@ -82,11 +41,6 @@ public class Contact implements ContactInterface, Cloneable {
         return theCopy;
     }
 
-	/**
-    * Check to see if a record has an attribute. Should not be case sensitive.
-    * @param attribute possible attribute within a record.
-    * @return true if the value is contained in the object, false otherwise.
-    */
     @Override
 	public boolean exists(String attriubte) {
 		try {
