@@ -1,4 +1,4 @@
-
+package project1CS351;
 
 
 import java.io.BufferedReader;
@@ -6,33 +6,54 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+
+
 public class ContactList {
     Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
-    	String workContactfile ="src/workContacts2.txt";
-        //String personalContactfile = "personalContacts";
+    	String personalContactFile ="personalContacts1.txt";
+        String personalContactfile = "personalContacts";
+       
         
-        
-        String filePath = workContactfile;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(workContactfile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(personalContactFile))) {
             String line;
+            PersonalInfo thisInfo = null;
+            Address thisAddress;
+            Label thisLabel = null;
+            
+         // Read and discard the first line
+            String identifier = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 // Split the line by comma and trim whitespace from each field
-                String[] fields = line.split(",");
-                for (int i = 0; i < fields.length; i++) {
-                    fields[i] = fields[i].trim(); // Trim the field to remove leading/trailing whitespace
-                }
-
-                // Example processing: print fields to console
-                for (String field : fields) {
-                    System.out.println(field);
-                }
-                System.out.println("---------------"); // Separator for visual distinction between records
+            	
+            	
+	                String[] fields = line.split(",");
+	                for (int i = 0; i < fields.length; i++) {
+	                    fields[i] = fields[i].trim(); // Trim the field to remove leading/trailing whitespace
+	                }
+	                
+	      
+	                thisAddress = new Address(fields[4], fields[5], fields[6], Long.parseLong(fields[7]));
+	                
+	                
+	                if(identifier.equals("P")){
+	                	thisInfo = new PersonalInfo(fields[0], fields[1]);
+	                	thisLabel = Label.fromString(fields[8]);
+	                	PersonalContact personalContact = new PersonalContact(Long.parseLong(fields[3]),
+	                			fields[2], thisAddress, thisInfo, thisLabel);
+	                	
+	                }else if(identifier.equals("W")){
+	                	thisInfo = new PersonalInfo(fields[0], fields[1], status);
+	                }
+	                
+	        
+	               
+	                System.out.println("---------------"); // Separator for visual distinction between records
             }
+            
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
         
         
         
