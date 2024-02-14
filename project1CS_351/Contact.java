@@ -1,5 +1,5 @@
 
-//public class Contact implements ContactInterface, Cloneable {
+public class Contact implements ContactInterface, Cloneable {
     
     private PersonalInfo personalInfo;
     private Address address;
