@@ -40,7 +40,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
     }
 
-    @SuppressWarnings("unchecked")
+
 	private void doClear(){
        this.head = new Node<T>(null, null, null);
        this.tail = new Node<T>(null, head, null);
@@ -70,90 +70,88 @@ public class Table<T extends Contact> implements Iterable<T> {
         
     }
 
-    public boolean contains(T nodeObject){
-        boolean contains = false;
-        Node<T> current = this.head;
-        while(current.next != null){
-
-            current = current.next;
-            if(current.getData().equals(nodeObject)){
-
-                contains = true;
-                break;
+    public boolean contains(T nodeObject) {
+        for (T object : this) {
+            if (object.compare(nodeObject)) {
+                return true;
             }
-
         }
-            
-        return (contains);
-
+        return false;
     }
 
-    public Table<T> difference(Table<T> table){
-
-        Table<T> newTable = new Table<>();
-        Node<T> current = newTable.head;
-        T object = null;
-        
-		
-		//Iterate though each item of the FruitBasket and print them
-
-        while(current.next != null){
-            
-            current = current.next;
-            object = current.getData();
-            if(!this.contains(object)){
-
-                object = current.getData();
-            	newTable.insert(object);
+    public Table<T> difference(Table<? extends Contact> table) {
+        Table<T> diffTable = new Table<>();
+        for (T item : this) {
+            boolean found = false;
+            for (Contact contact : table) {
+                if ((item.compare(contact))) {
+                    found = true;
+                    break;
+                }else {
+                	found = false;
+                }
             }
-
-        }
-
-        return (newTable);
-
-    }
-
-
-
-    public Table<T> union(Table<T> table){
-
-        Table<T> unionTable = table;
-        Node<T> current = this.head;
-        T data = null;
-
-        while(current.next != null){
-
-            current = current.next;
-            data = current.getData();
-            if(!(unionTable.contains(data))){
-
-                unionTable.insert(current.getData());
+            if (!found) {
+                diffTable.insert(item);
             }
-
         }
-
-        return (unionTable);
-
+        return diffTable;
+    }
+    
+    
+    
+    public Table<T> select(String attribute, String value){
+    	Table<T> selected = new Table<>();
+    	
+    	for(T object: this) {
+    		if(object.hasValue(attribute, value)) {
+    			selected.insert(object);
+    		}
+    	}
+    	
+    	return (selected);
     }
 
 
-    public Table<T> intersect(String attribute, String value,
-    Table<T> table){
+    public Table<T> union(Table<? extends Contact> otherTable) {
+        Table<T> unionTable = new Table<>();
+
         
-        Table<T> intersectTable = this.union(table);
-        Node<T> current = intersectTable.head;
-        
-
-        while(current.next != null){
-
-            current = current.next;
-            current.nodeData.setValue(attribute, value);
-
+        for (T item : this) {
+            unionTable.insert(item);
         }
 
-        return (intersectTable);
+        
+        for (Contact contact : otherTable) {
+            @SuppressWarnings("unchecked")
+			T item = (T) contact; 
+            if (!unionTable.contains(item)) {
+                unionTable.insert(item);
+            }
+        }
 
+        return unionTable;
     }
+
+
+    Table<T> intersect(String attribute, String value, Table<T> table) {
+        
+    	Table<T> intersectTable = new Table<>();
+        for (T item : this) {
+            if (table.contains(item) &&
+            		item.hasValue(attribute, value)) {
+                intersectTable.insert(item);
+            }
+        }
+        return intersectTable;
+    }
+
+
+    
+
+
+    
+    
     public void remove(String attribute, String value){
 
 
@@ -176,21 +174,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
 
 
-    public Table<T> select(String attribute, String value){
-        
-        Table<T> selectedTable = this;
-        Node<T> current = selectedTable.head;
-        T data = null;
-
-        while(current.next != null){
-
-            current = current.next;
-            current.nodeData.setValue(attribute, value);
-        }
-
-        return (selectedTable);
-
-   }
+    
             
     public T get(int idx){
         return (getNode(idx).getData());}
@@ -208,13 +192,28 @@ public class Table<T extends Contact> implements Iterable<T> {
         return remove(getNode(idx));
     }
 
-    private void addBefore(Node<T> node, T nodeData){
-        Node<T> newNode = new Node<>(nodeData, node.getPrevious(), node);
-        newNode.previous.next = newNode;
-        newNode.previous = newNode;
+    private void addBefore(Node<T> node, T nodeData) {
+    	
+        // Create a new node that links to 'node' and 'node's previous node
+        Node<T> newNode = new Node<>(nodeData, node.previous, node);
+        
+        // Link the new node into the list
+        if (node.previous != null) {
+            // Node is not the first real node (right after head), link 'node.previous' to 'newNode'
+            node.previous.next = newNode;
+        } else {
+            // If 'node' is the first real node (right after head), update 'head.next' to point to 'newNode'
+            this.head.next = newNode;
+        }
+        
+        // Make node point back to newNode
+        node.previous = newNode;
+        
         this.size++;
         this.modCount++;
-   }
+    }
+
+    
 
 
 
@@ -226,6 +225,7 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         return (node.getData());
     }
+    
     private Node<T> getNode(int idx){
         
         return getNode(idx, 0, this.size() - 1);
@@ -311,6 +311,19 @@ public class Table<T extends Contact> implements Iterable<T> {
 
         }
 
+   }
+    
+    
+   @Override
+   public String toString() {
+	   String sb = "";
+	  
+	   for(T object : this) {
+		   sb += object.toString();
+		
+	   }
+	   
+	   return (sb);
    }
 
 
