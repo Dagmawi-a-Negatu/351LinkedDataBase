@@ -1,4 +1,4 @@
-package project1CS351;
+package project1CS_351;
 
 
 import java.io.BufferedReader;
