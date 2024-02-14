@@ -1,9 +1,9 @@
 package project1CS351;
 
-public class WorkContact extends Contact {
+public class WorkContact extends Contact implements Clonable {
 	
     
-	private String title;
+	public String title;
     private String company;
     private String department;
 
@@ -30,6 +30,15 @@ public class WorkContact extends Contact {
     public String getDepartment() {
     	return (this.department);
     }
+    
+    @Override
+    public String toString() {
+    	
+    	return ("Job Title: "+ this.getTitle()+ "\n"+
+    			"Company: " + this.getCompany() + "\n"+
+    			"Department: " + this.getDepartment() +"\n"
+    			+ super.toString());
+    }
    
   
     
@@ -48,6 +57,37 @@ public class WorkContact extends Contact {
 
         return theCopy;
   }
+  
+  
+  @Override
+  public boolean hasValue(String attribute, String value) {
+		
+		
+		if(exists(attribute)){
+			if(attribute.equalsIgnoreCase("first")) {
+				
+				return (super.getPersonalInfo().getFristName().equalsIgnoreCase(value));
+					
+			}
+					
+			else if (attribute.equalsIgnoreCase("last")) {
+					return (super.getPersonalInfo().getLastName().equalsIgnoreCase(value));
+			}
+			
+			if(attribute.equalsIgnoreCase("title")) {
+				return (this.getTitle().equalsIgnoreCase(value));
+			}
+
+		
+		}
+	
+	return (false);
+	
+	
+  }
+  
+  
+  
   
 }
 
