@@ -2,10 +2,10 @@ package project1CS351;
 
 public enum Status {
 	
-		MARRIED("married"),
-        SINGLE("single"),
-        DIVORCED("divorced"),
-        WIDOWED("widowed");
+		MARRIED("Married"),
+        SINGLE("Single"),
+        DIVORCED("Divorced"),
+        WIDOWED("Widowed");
 
         private final String status;
 
@@ -28,6 +28,16 @@ public enum Status {
             }
             throw new IllegalArgumentException("No constant with text " + text + " found");
         }
-}
+        
+        @Override
+        public String toString() {
+        	return ("("+ status+") ");
+        }
+        
+        
+        public boolean compare(Status status) {
+        	return (this.getStatus().equals(status.getStatus()));
+        }
+    }
 
 
