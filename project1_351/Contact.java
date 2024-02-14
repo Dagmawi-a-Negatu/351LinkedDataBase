@@ -1,25 +1,22 @@
 package project1CS351;
 
 public class Contact implements ContactInterface, Cloneable {
+    
+    private PersonalInfo personalInfo;
+    private Address address;
+    private Long phoneNumber;
+    private String emailAddress;
+    
+    public Contact(Long phoneNumber, String emailAddress, Address address, PersonalInfo personalInfo) {
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.personalInfo = personalInfo;
+        this.address = address;
+    }
 	
-	private PersonalInfo personalInfo;
-	private Address address;
-	private Long phoneNumber;
-	private String emailAddress;
 	
 	
-	
-	public Contact(Long phoneNumber, String emailAddress, Address address,
-    PersonalInfo personalInfo) {
-		
-		this.phoneNumber = phoneNumber;
-		this.emailAddress = emailAddress;
-		this.personalInfo = personalInfo;
-		this.address = address;
-	}
-		
-	
-	 public Long phoneNumber() {
+	 public Long getPhoneNumber() {
 	    	return (this.phoneNumber);
 	 }
 	    
@@ -34,29 +31,63 @@ public class Contact implements ContactInterface, Cloneable {
 	 public PersonalInfo getPersonalInfo() {
 	    	return (this.personalInfo);
 	 }
-
+	 
+	 public String toString() {
+	        String sb = "\t" + this.personalInfo.toString() +
+	                    " \tPhone: " + this.getPhoneNumber() + "\n" +
+	                   "\t" + this.address.toString() + "----------------------------------------------------------\n";
+	        return sb;
+	 }
 	
-    @Override
+	
+	public boolean compare(Contact contact) {
+		if (this == contact) {
+			return (true);
+		}
+		
+		if(contact == null) {
+			return (false);
+		}
+		
+		
+		
+		if(this.personalInfo.compare(contact.personalInfo) &&
+		this.address.compare(contact.address)  &&
+		
+		this.getPhoneNumber().equals(contact.getPhoneNumber())	
+		
+		
+		) {
+			
+			return (true);
+		}
+		
+		return (false);
+	}
+	
+	
+	@Override
     public Contact clone() {
-        Contact theCopy = null;
         try {
-            theCopy = (Contact)super.clone(); // clone Contact's fields
-            theCopy.address = (Address) address.clone();
+            Contact theCopy = (Contact) super.clone();
+            theCopy.address = this.address.clone();
+            // Consider also cloning personalInfo if it's mutable
+            return theCopy;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Should not happen since we are Cloneable
         }
-        catch(CloneNotSupportedException cnse) {
-            System.out.println(cnse.getMessage());
-        }
-        return theCopy;
     }
 
     @Override
-	public boolean exists(String attriubte) {
-		try {
-			this.getClass().getDeclaredField(attriubte);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public boolean exists(String attribute) {
+		
+    	if(attribute.equalsIgnoreCase("first")||
+    	attribute.equalsIgnoreCase("last") ||
+    	attribute.equalsIgnoreCase("title")) {
+    		return (true);
+    	}
+    	
+    	return (false);
 		
     }
 
@@ -68,44 +99,39 @@ public class Contact implements ContactInterface, Cloneable {
 	 * @return true if the value is contained in the object, false otherwise.
 	 * @throws IllegalArgumentExcpetion if the attirubte is invalid.
 	 */
-	@Override
-	public boolean hasValue(String attribute, String value)
-    throws IllegalArgumentException {
-		if (!exists(attribute)) {
-			throw new IllegalArgumentException();
-		} else {
-			try {
-				String val = (String)this.getClass().getDeclaredField
-				(attribute).get(this);
-				if (val.equalsIgnoreCase(value)) {
-					return true;
-				} else {
-					return false;
+	
+	public boolean hasValue(String attribute, String value) {
+		
+			
+			if(exists(attribute)){
+				if(attribute.equalsIgnoreCase("first")) {
+					
+					return (this.personalInfo.getFristName().equalsIgnoreCase(value));
+						
 				}
-			} catch (NoSuchFieldException nsfe) {
-				System.out.println(nsfe.getMessage());
-				return false;
-			} catch (IllegalAccessException iae) {
-				System.out.println(iae.getMessage());
-				return false;
+						
+				else if (attribute.equalsIgnoreCase("last")) {
+						return (this.personalInfo.getLastName().equalsIgnoreCase(value));
+				}
+
+			
 			}
-		}
+		
+		return (false);
     }
 
 	@Override
 	public void setValue(String attribute, String value) 
     throws IllegalArgumentException {
-		if (!exists(attribute)) {
-			throw new IllegalArgumentException();
-        }
-	    else {
-			try {
-				this.getClass().getDeclaredField(attribute).set(this, value);
-			} catch (NoSuchFieldException nsfe) {
-				System.out.println(nsfe.getMessage());
-			} catch (IllegalAccessException iae) {
-				System.out.println(iae.getMessage());
-			}
+		
+		if(attribute.equals("first")) {
+			
+			this.personalInfo.setFristName(value);
+		}else if(attribute.equals("last")) {
+			this.personalInfo.setLastName(value);
 		}
+		
+		
+		
     }
 }
