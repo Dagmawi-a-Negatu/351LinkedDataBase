@@ -30,4 +30,10 @@ public enum Label {
         }
         throw new IllegalArgumentException("No constant with text " + text + " found");
     }
+    
+    public boolean compare(Label status) {
+    	return (this.getLabel().equals(status.getLabel()));
+    }
+    
+    
 }
