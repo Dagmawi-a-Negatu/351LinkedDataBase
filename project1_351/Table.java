@@ -1,4 +1,4 @@
-package project1CS351;
+package project1CS_351;
 
 import java.util.NoSuchElementException;
 public class Table<T extends Contact> implements Iterable<T> {
