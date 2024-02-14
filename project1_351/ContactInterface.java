@@ -1,4 +1,4 @@
-package project1CS351;
+package project1CS_351;
 
 /**
  * Interface e for checking and changing attributes of records
