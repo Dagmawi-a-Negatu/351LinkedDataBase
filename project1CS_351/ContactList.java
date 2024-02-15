@@ -131,7 +131,7 @@ public class ContactList {
 		            case 1:
 		            	
 		            	
-		            	System.out.print("Enter Group > ");
+		            	System.out.print("Enter Contact List > ");
 		            	group = scan.nextInt();
 		            	
 		            	System.out.print("Enter attribute > ");

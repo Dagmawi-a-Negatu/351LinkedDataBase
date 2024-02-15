@@ -30,7 +30,7 @@ public enum Status {
         
         @Override
         public String toString() {
-        	return ("("+ status+") ");
+        	return ("("+ status+"): ");
         }
         
         

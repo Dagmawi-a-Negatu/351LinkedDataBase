@@ -69,7 +69,7 @@ public class PersonalInfo {
 		if(martialStatus != null) {
 			sb += martialStatus.toString();
 		}else{
-			sb += " (NA)";
+			sb += " (NA):";
 		}
 		
 		
